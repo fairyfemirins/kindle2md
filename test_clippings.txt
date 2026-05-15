@@ -1,0 +1,5 @@
+The Pragmatic Programmer (Andrew Hunt)
+- Your Highlight on Location 123-124 | Added on Friday, May 15, 2026 03:21 PM
+
+Debugging is twice as hard as writing the code in the first place.
+==========
