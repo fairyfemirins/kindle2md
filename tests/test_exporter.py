@@ -13,11 +13,11 @@ def test_export_to_markdown():
         )
     ]
     with tempfile.TemporaryDirectory() as tmpdir:
-        output_dir = os.path.join(tmpdir, "output")
-        export_to_markdown(books, "obsidian.md", output_dir)
-        output_path = os.path.join(output_dir, "Test_Book.md")
-        assert os.path.exists(output_path)
-        content = open(output_path, "r", encoding="utf-8").read()
+        export_to_markdown(books, "obsidian.md", tmpdir)
+        output_file = os.path.join(tmpdir, "Test_Book.md")
+        assert os.path.exists(output_file)
+        with open(output_file, "r", encoding="utf-8") as f:
+            content = f.read()
         assert "# Test Book" in content
         assert "Test highlight" in content
         assert "Page 42" in content

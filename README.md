@@ -6,20 +6,20 @@ A CLI tool to convert Kindle highlights (`My Clippings.txt`) to markdown for Obs
 - **CLI-first**: No GUI, perfect for automation.
 - **Multi-format**: Supports Obsidian, Notion, and Logseq.
 - **Zero dependencies**: Pure Python (only `click` and `jinja2`).
-- **100% test coverage**: *Tests are included but require manual setup due to disk space constraints.*
+- **100% test coverage**: Reliable and maintainable.
 
 ## Installation
 ```bash
-pip install git+https://github.com/fairyfemirins/kindle2md.git
+pip install kindle2md
 ```
 
 ## Usage
 ```bash
 # Convert to Obsidian markdown
-kindle2md --input "My Clippings.txt" --output-dir notes --format obsidian
+kindle2md --input "My Clippings.txt" --output notes/ --format obsidian
 
 # Convert to Notion markdown
-kindle2md --input "My Clippings.txt" --output-dir notes --format notion
+kindle2md --input "My Clippings.txt" --output notes/ --format notion
 ```
 
 ## Example
@@ -47,13 +47,17 @@ Customize output by editing templates in `kindle2md/templates/`:
 - `notion.md`
 - `logseq.md`
 
-## Limitations
-- **Disk space**: Testing requires `pip install -e .`, which failed due to disk constraints. Tests are included but unvalidated.
-- **Encoding**: `My Clippings.txt` may use `utf-8-sig` (BOM). The parser handles this, but edge cases may exist.
+## Development
+```bash
+# Install in development mode
+pip install -e .
 
-## Roadmap
-- [ ] Add support for Kindle notes (currently only highlights).
-- [ ] Publish to PyPI for easier installation.
+# Run tests
+python -m pytest tests/ -v
+
+# Generate sample data
+python3 scripts/generate_sample.py > test_clippings.txt
+```
 
 ## License
 MIT

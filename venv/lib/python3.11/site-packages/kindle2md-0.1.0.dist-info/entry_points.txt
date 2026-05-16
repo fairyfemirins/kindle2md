@@ -1,0 +1,2 @@
+[console_scripts]
+kindle2md = kindle2md.cli:cli

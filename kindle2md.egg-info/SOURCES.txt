@@ -1,0 +1,15 @@
+LICENSE
+README.md
+setup.py
+kindle2md/__init__.py
+kindle2md/cli.py
+kindle2md/exporter.py
+kindle2md/parser.py
+kindle2md.egg-info/PKG-INFO
+kindle2md.egg-info/SOURCES.txt
+kindle2md.egg-info/dependency_links.txt
+kindle2md.egg-info/entry_points.txt
+kindle2md.egg-info/requires.txt
+kindle2md.egg-info/top_level.txt
+tests/test_exporter.py
+tests/test_parser.py

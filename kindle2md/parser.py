@@ -28,18 +28,20 @@ def parse_clippings(file_path: str) -> List[Book]:
             continue
         title_author = lines[0].strip()
         metadata = lines[1].strip()
-        highlight_text = "\n".join(lines[3:]).strip()
+        highlight_text = lines[2].strip()  # Third line is the highlight
+
+        # Skip malformed entries
+        if title_author.startswith("#") or title_author.startswith("-"):
+            continue
 
         # Extract title/author
         match = re.match(r"^(.*?)(?:\s\((.*?)\))?$", title_author)
-        title, author = match.groups() if match else (title_author, "Unknown")
-        author = author or "Unknown"
-        title = title.strip()
-        author = author.strip()
-
-        # Skip malformed entries
-        if title.startswith("-") or title.startswith("#"):
+        if not match:
+            print(f"Skipping malformed title: {title_author}")
             continue
+        title, author = match.groups()
+        title = title.strip()
+        author = author.strip() if author else "Unknown"
 
         # Extract page/location
         page = re.search(r"page (\d+)", metadata, re.IGNORECASE)

@@ -1,15 +1,9 @@
-The Pragmatic Programmer: Your Journey to Mastery (Andrew Hunt)
-- Your Highlight on Location 123-124 | Added on Friday, May 15, 2026 12:26:00 AM
+The Pragmatic Programmer (Andrew Hunt)
+- Your Highlight on page 42 | Location 123-124
+This is a highlight.
 
-Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.
 ==========
-The Pragmatic Programmer: Your Journey to Mastery (Andrew Hunt)
-- Your Note on Location 125 | Added on Friday, May 15, 2026 12:27:00 AM
+Clean Code (Robert C. Martin)
+- Your Highlight on page 100 | Location 456-457
+Another highlight.
 
-This quote is gold! Need to remember this for my next project.
-==========
-Atomic Habits (James Clear)
-- Your Highlight on Location 456-457 | Added on Friday, May 15, 2026 12:28:00 AM
-
-You do not rise to the level of your goals. You fall to the level of your systems.
-==========

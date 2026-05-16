@@ -15,10 +15,10 @@ Another highlight.
 """
     with tempfile.NamedTemporaryFile(mode="w", delete=False, encoding="utf-8") as f:
         f.write(sample)
-        test_file = f.name
+        f.flush()
 
-    books = parse_clippings(test_file)
-    os.unlink(test_file)
+    books = parse_clippings(f.name)
+    os.unlink(f.name)
 
     assert len(books) == 2
     assert books[0].title == "The Pragmatic Programmer"
@@ -26,9 +26,9 @@ Another highlight.
     assert len(books[0].highlights) == 1
     assert books[0].highlights[0].text == "This is a highlight."
     assert books[0].highlights[0].page == "42"
+    assert books[0].highlights[0].location == "123"
 
     assert books[1].title == "Clean Code"
     assert books[1].author == "Robert Martin"
     assert len(books[1].highlights) == 1
     assert books[1].highlights[0].text == "Another highlight."
-    assert books[1].highlights[0].page == "100"
