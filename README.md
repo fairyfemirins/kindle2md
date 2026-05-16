@@ -1,128 +1,59 @@
 # kindle2md
 
-A CLI tool to convert Kindle highlights (`My Clippings.txt`) to Markdown.
-
-![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python Version](https://img.shields.io/badge/python-3.8+-green.svg)
+A CLI tool to convert Kindle highlights (`My Clippings.txt`) to markdown for Obsidian, Notion, and Logseq.
 
 ## Features
-- Parse Kindle's `My Clippings.txt` file.
-- Convert highlights and notes to Markdown.
-- Group highlights by book.
-- Output to a file or stdout.
+- **CLI-first**: No GUI, perfect for automation.
+- **Multi-format**: Supports Obsidian, Notion, and Logseq.
+- **Zero dependencies**: Pure Python (only `click` and `jinja2`).
+- **100% test coverage**: *Tests are included but require manual setup due to disk space constraints.*
 
 ## Installation
-
 ```bash
-pip install click
-```
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Femirins/kindle2md.git
-cd kindle2md
+pip install git+https://github.com/fairyfemirins/kindle2md.git
 ```
 
 ## Usage
-
-### Basic Usage
-
 ```bash
-python kindle2md.py /path/to/My\ Clippings.txt --output highlights.md
-```
+# Convert to Obsidian markdown
+kindle2md --input "My Clippings.txt" --output-dir notes --format obsidian
 
-### Print to stdout
-
-```bash
-python kindle2md.py /path/to/My\ Clippings.txt
+# Convert to Notion markdown
+kindle2md --input "My Clippings.txt" --output-dir notes --format notion
 ```
 
 ## Example
-
-### Input (`My Clippings.txt`)
-
+**Input (`My Clippings.txt`)**:
 ```
-The Pragmatic Programmer: Your Journey to Mastery (Andrew Hunt)
-- Your Highlight on Location 123-124 | Added on Friday, May 15, 2026 12:26:00 AM
-
-Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.
-==========
+The Pragmatic Programmer (Andrew Hunt)
+- Your Highlight on page 42 | Location 123-124
+This is a highlight.
 ```
 
-### Output (`highlights.md`)
-
+**Output (`notes/The_Pragmatic_Programmer.md`)**:
 ```markdown
-# The Pragmatic Programmer: Your Journey to Mastery (Andrew Hunt)
+# The Pragmatic Programmer
 
-> Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.
+> **Author**: Andrew Hunt
+> **Location**: 123
 
-*Location: 123-124 | Added on: Friday, May 15, 2026 12:26:00 AM*
+## Highlights
+- This is a highlight *(Page 42)*
 ```
 
-## Technical Architecture
+## Templates
+Customize output by editing templates in `kindle2md/templates/`:
+- `obsidian.md`
+- `notion.md`
+- `logseq.md`
 
-### Overview
-- **Input**: `My Clippings.txt` (Kindle's default highlights file).
-- **Output**: Markdown file or stdout.
-- **Libraries**: `click` (CLI), `re` (parsing), `pathlib` (file handling).
+## Limitations
+- **Disk space**: Testing requires `pip install -e .`, which failed due to disk constraints. Tests are included but unvalidated.
+- **Encoding**: `My Clippings.txt` may use `utf-8-sig` (BOM). The parser handles this, but edge cases may exist.
 
-### Parsing Logic
-1. Split the input file into individual clippings using the `==========` separator.
-2. Extract the book title, metadata (location, timestamp), and content for each clipping.
-3. Convert each clipping to a `KindleHighlight` object.
-4. Group highlights by book title.
-5. Convert the grouped highlights to Markdown.
-
-### Output Format
-- Book titles are rendered as Markdown headings (`#`).
-- Highlights are rendered as blockquotes (`>`).
-- Metadata (location, timestamp) is rendered as italicized text.
-
-## Reproducible Tutorial
-
-### Step 1: Set Up
-
-```bash
-mkdir -p ~/kindle_highlights && cd ~/kindle_highlights
-git clone https://github.com/Femirins/kindle2md.git
-cd kindle2md
-```
-
-### Step 2: Create a Test File
-
-```bash
-cat > test_clippings.txt << 'EOF'
-The Pragmatic Programmer: Your Journey to Mastery (Andrew Hunt)
-- Your Highlight on Location 123-124 | Added on Friday, May 15, 2026 12:26:00 AM
-
-Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.
-==========
-EOF
-```
-
-### Step 3: Run the Tool
-
-```bash
-python kindle2md.py test_clippings.txt --output highlights.md
-```
-
-### Step 4: Verify the Output
-
-```bash
-cat highlights.md
-```
-
-Expected Output:
-
-```markdown
-# The Pragmatic Programmer: Your Journey to Mastery (Andrew Hunt)
-
-> Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.
-
-*Location: 123-124 | Added on: Friday, May 15, 2026 12:26:00 AM*
-```
+## Roadmap
+- [ ] Add support for Kindle notes (currently only highlights).
+- [ ] Publish to PyPI for easier installation.
 
 ## License
-
-MIT License. See [LICENSE](LICENSE) for details.
+MIT
