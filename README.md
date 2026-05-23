@@ -41,3 +41,5 @@ This reminds me of the KISS principle. Keep code simple to avoid debugging night
 
 ## License
 MIT
+## Note
+This repository was published under \(fairyfemirins\) due to GitHub namespace restrictions. A transfer to femirins is pending.
