@@ -1,0 +1,16 @@
+==========
+The Pragmatic Programmer (Andrew Hunt, David Thomas)
+- Your Highlight on page 42 | Location 563-564 | Added on Saturday, May 23, 2026 10:00:00 AM
+
+Debugging is twice as hard as writing the code in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?
+==========
+The Pragmatic Programmer (Andrew Hunt, David Thomas)
+- Your Note on page 42 | Location 564 | Added on Saturday, May 23, 2026 10:01:00 AM
+
+This reminds me of the KISS principle. Keep code simple to avoid debugging nightmares.
+==========
+Atomic Habits (James Clear)
+- Your Highlight on page 112 | Location 1200-1201 | Added on Saturday, May 23, 2026 10:05:00 AM
+
+You do not rise to the level of your goals. You fall to the level of your systems.
+==========

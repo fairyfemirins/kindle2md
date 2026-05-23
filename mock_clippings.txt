@@ -1,0 +1,10 @@
+Sample Book Title (Sample Author)
+- Your Highlight on Location 123-124 | Added on Friday, May 22, 2026
+
+This is a sample highlight.
+==========
+Sample Book Title (Sample Author)
+- Your Note on Location 456 | Added on Friday, May 22, 2026
+
+This is a sample note.
+==========
