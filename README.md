@@ -1,41 +1,39 @@
 # kindle2md
 
-Convert Kindle "My Clippings.txt" to structured Markdown with metadata.
+**Convert Kindle highlights to Markdown for Obsidian, Notion, or blogs.**
 
 ## Features
-- **Batch processing**: Convert all highlights in one run.
-- **Metadata**: Preserve location and timestamp for each highlight.
-- **Extensible**: Output is compatible with Obsidian, Notion, and Anki.
-- **CLI-based**: Automate Kindle highlight conversion.
+- Parses `My Clippings.txt` into structured data (Book, Highlight objects).
+- Exports highlights to **Markdown** with metadata (location, date, page).
+- Supports notes, Unicode, and batch processing.
+- CLI for easy use.
 
 ## Installation
 ```bash
-pip install -r requirements.txt  # None required for basic usage
+git clone https://github.com/femirins/kindle2md.git
+cd kindle2md
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt  # (click)
 ```
 
 ## Usage
 ```bash
-python3 kindle2md.py /path/to/My\ Clippings.txt output.md
+# Parse highlights and generate Markdown
+python -m cli parse My\ Clippings.txt --output-dir output/
 ```
 
 ## Example Output
 ```markdown
-# The Pragmatic Programmer (Andrew Hunt, David Thomas)
+# The Fellowship of the Ring
 
-> The most damaging phrase in the language is “We’ve always done it this way!”
-- Location: 123 | Added: 2026-05-23 09:30:21
+**Author**: J.R.R. Tolkien
 
-# Atomic Habits (James Clear)
+> When Mr. Bilbo Baggins of Bag End announced...
+> **Location: 100 | Date: 2026-05-23**
 
-> You do not rise to the level of your goals. You fall to the level of your systems.
-- Location: 456 | Added: 2026-05-24 10:15:47
+---
 ```
-
-## Technical Architecture
-1. **Parser**: Splits `My Clippings.txt` into entries using `==========` separators.
-2. **Extractor**: Uses regex to extract book title, author, location, and timestamp.
-3. **Formatter**: Converts highlights to Markdown with metadata.
-4. **Writer**: Groups highlights by book and writes to a single Markdown file.
 
 ## License
 MIT
