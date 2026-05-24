@@ -1,45 +1,41 @@
-# Kindle Highlights to Markdown
+# kindle2md
 
-Convert your Kindle `My Clippings.txt` file into searchable Markdown notebooks — one file per book, with highlights, notes, and metadata.
+Convert Kindle "My Clippings.txt" to structured Markdown with metadata.
 
 ## Features
-- ✅ **Parses Kindle's proprietary format** (`My Clippings.txt`).
-- ✅ **Generates clean Markdown** with frontmatter (title, author).
-- ✅ **Supports highlights and notes** with timestamps and locations.
-- ✅ **Offline-first** — no external APIs or dependencies.
-- ✅ **Searchable** — use `ripgrep` or `fzf` to search your highlights.
+- **Batch processing**: Convert all highlights in one run.
+- **Metadata**: Preserve location and timestamp for each highlight.
+- **Extensible**: Output is compatible with Obsidian, Notion, and Anki.
+- **CLI-based**: Automate Kindle highlight conversion.
 
 ## Installation
 ```bash
-pip install questionary
-git clone https://github.com/femirins/kindle-highlights-to-markdown.git
-cd kindle-highlights-to-markdown
+pip install -r requirements.txt  # None required for basic usage
 ```
 
 ## Usage
 ```bash
-python3 kindle_highlights_to_markdown.py "My Clippings.txt" output_directory
+python3 kindle2md.py /path/to/My\ Clippings.txt output.md
 ```
 
 ## Example Output
 ```markdown
----
-title: 'The Pragmatic Programmer'
-author: 'Andrew Hunt, David Thomas'
----
+# The Pragmatic Programmer (Andrew Hunt, David Thomas)
 
-## Highlight (Location 563-564)
-*Saturday, May 23, 2026 10:00:00 AM*
+> The most damaging phrase in the language is “We’ve always done it this way!”
+- Location: 123 | Added: 2026-05-23 09:30:21
 
-Debugging is twice as hard as writing the code in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?
+# Atomic Habits (James Clear)
 
-## Note (Location 564)
-*Saturday, May 23, 2026 10:01:00 AM*
-
-This reminds me of the KISS principle. Keep code simple to avoid debugging nightmares.
+> You do not rise to the level of your goals. You fall to the level of your systems.
+- Location: 456 | Added: 2026-05-24 10:15:47
 ```
+
+## Technical Architecture
+1. **Parser**: Splits `My Clippings.txt` into entries using `==========` separators.
+2. **Extractor**: Uses regex to extract book title, author, location, and timestamp.
+3. **Formatter**: Converts highlights to Markdown with metadata.
+4. **Writer**: Groups highlights by book and writes to a single Markdown file.
 
 ## License
 MIT
-## Note
-This repository was published under \(fairyfemirins\) due to GitHub namespace restrictions. A transfer to femirins is pending.
