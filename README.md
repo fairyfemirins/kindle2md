@@ -1,38 +1,70 @@
-# kindle2md
+# Kindle2MD: Autonomous Kindle Clippings to Markdown Converter
 
-**Convert Kindle highlights to Markdown for Obsidian, Notion, or blogs.**
+An autonomous, open-source CLI tool to convert Kindle "My Clippings.txt" into structured Markdown notes with highlights, annotations, and metadata.
 
 ## Features
-- Parses `My Clippings.txt` into structured data (Book, Highlight objects).
-- Exports highlights to **Markdown** with metadata (location, date, page).
-- Supports notes, Unicode, and batch processing.
-- CLI for easy use.
+- Parses Kindle `My Clippings.txt` into structured data.
+- Outputs clean Markdown files (one per book).
+- Supports highlights, notes, and bookmarks.
+- Autonomous: No manual setup required.
+- Self-documenting: Reproducible examples and architecture.
+- Extensible: Custom output formats via templates.
+- Multi-language support: Works with English, Chinese, Japanese, and other languages.
+
+## Technical Architecture
+```mermaid
+flowchart TD
+    A[My Clippings.txt] --> B[Parser]
+    B --> C[Structured Data]
+    C --> D[Markdown Generator]
+    D --> E[Output: Book1.md, Book2.md, ...]
+```
 
 ## Installation
 ```bash
+# Clone the repository
 git clone https://github.com/femirins/kindle2md.git
 cd kindle2md
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt  # (click)
+
+# Install dependencies (if any)
+pip install -r requirements.txt
 ```
 
 ## Usage
 ```bash
-# Parse highlights and generate Markdown
-python -m cli parse My\ Clippings.txt --output-dir output/
+# Convert clippings to Markdown
+python3 kindle2md.py "My Clippings.txt" output_dir
+
+# Example
+python3 kindle2md.py test_clippings.txt output
 ```
 
 ## Example Output
+### Input (`My Clippings.txt`)
+```text
+The Pragmatic Programmer (Andrew Hunt, David Thomas)
+- Your Highlight on Location 123-124 | Added on Monday, May 25, 2026, 10:00:00 AM
+
+The most damaging phrase in the language is “We’ve always done it this way!”
+==========
+```
+
+### Output (`The Pragmatic Programmer.md`)
 ```markdown
-# The Fellowship of the Ring
-
-**Author**: J.R.R. Tolkien
-
-> When Mr. Bilbo Baggins of Bag End announced...
-> **Location: 100 | Date: 2026-05-23**
+# The Pragmatic Programmer
+**Author**: Andrew Hunt, David Thomas
 
 ---
+
+> The most damaging phrase in the language is “We’ve always done it this way!”
+
+- *Location*: 123-124 | *Added on*: Monday, May 25, 2026, 10:00:00 AM
+```
+
+## Testing
+```bash
+# Run the test suite
+python3 -m unittest discover
 ```
 
 ## License

@@ -1,20 +1,11 @@
-The Fellowship of the Ring (J.R.R. Tolkien)
-- Your Highlight on Location 100-101 | Added on Saturday, May 23, 2026 08:00:00 PM
+The Pragmatic Programmer (Andrew Hunt, David Thomas)
+- Your Highlight on Location 123-124 | Added on Monday, May 25, 2026, 10:00:00 AM
 
-When Mr. Bilbo Baggins of Bag End announced that he would shortly be celebrating his eleventy-first birthday with a party of special magnificence, there was much talk and excitement in Hobbiton.
+The most damaging phrase in the language is “We’ve always done it this way!”
 ==========
-The Fellowship of the Ring (J.R.R. Tolkien)
-- Your Highlight on Location 150-151 | Added on Saturday, May 23, 2026 08:05:00 PM
 
-It was a dangerous business, Frodo, going out your door. You step onto the road, and if you don't keep your feet, there's no knowing where you might be swept off to.
-==========
-The Two Towers (J.R.R. Tolkien)
-- Your Highlight on Location 200-201 | Added on Saturday, May 23, 2026 08:10:00 PM
+原子习惯 (James Clear)
+- Your Highlight on 位置 456-457 | Added on Monday, May 25, 2026, 10:01:00 AM
 
-War must be, while we defend our lives against a destroyer who would devour all; but I do not love the bright sword for its sharpness, nor the arrow for its swiftness, nor the warrior for his glory.
-==========
-The Return of the King (J.R.R. Tolkien)
-- Your Note on Location 300 | Added on Saturday, May 23, 2026 08:15:00 PM
-
-This is a note about the ending. It was bittersweet but satisfying.
+You do not rise to the level of your goals. You fall to the level of your systems.
 ==========

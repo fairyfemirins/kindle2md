@@ -1,110 +1,112 @@
 #!/usr/bin/env python3
 """
-kindle2md: Convert Kindle "My Clippings.txt" to structured Markdown.
+Kindle2MD: Autonomous Kindle Clippings to Markdown Converter
 
-Usage:
-  python3 kindle2md.py /path/to/My\ Clippings.txt output.md
-
-Output Format:
-  # Book Title (Author)
-  > Highlight text
-  - Location: 123 | Added: YYYY-MM-DD HH:MM:SS
+Parses Kindle "My Clippings.txt" into structured Markdown notes.
 """
 
 import re
 import sys
+import os
 from datetime import datetime
-from pathlib import Path
+from typing import List, Dict, Optional
 
 
-class KindleHighlight:
-    """Represents a single Kindle highlight or note."""
-
-    def __init__(self, book_title, author, text, location, timestamp):
-        self.book_title = book_title.strip()
-        self.author = author.strip()
-        self.text = text.strip()
-        self.location = location.strip()
-        self.timestamp = timestamp.strip()
-
-    def to_markdown(self):
-        """Convert the highlight to Markdown format."""
-        timestamp = datetime.strptime(self.timestamp, "%A, %B %d, %Y, %I:%M:%S %p").strftime("%Y-%m-%d %H:%M:%S")
-        return (
-            f"## {self.book_title} ({self.author})\n"
-            f"> {self.text}\n"
-            f"- Location: {self.location} | Added: {timestamp}\n"
-        )
-
-
-def parse_clippings(file_path):
-    """Parse Kindle "My Clippings.txt" file into a list of KindleHighlight objects."""
-    with open(file_path, "r", encoding="utf-8-sig") as file:
-        content = file.read()
-
-    # Split into entries (separated by "==========")
-    entries = re.split(r"\n=+\n", content)
-    highlights = []
-
+def parse_clippings(file_path: str) -> List[Dict]:
+    """Parse Kindle "My Clippings.txt" into structured data."""
+    with open(file_path, 'r', encoding='utf-8-sig') as f:
+        content = f.read()
+    
+    # Split clippings by separator
+    entries = content.split('==========')
+    clippings = []
+    
     for entry in entries:
-        if not entry.strip():
+        entry = entry.strip()
+        if not entry:
             continue
-
-        # Extract book title, author, metadata, and text
-        lines = entry.strip().split("\n")
-        if len(lines) < 4:
+        
+        # Parse book title and author
+        title_author_line = entry.split('\n')[0].strip()
+        title_author_match = re.match(r'^(.+) \((.+)\)$', title_author_line)
+        if not title_author_match:
+            title_author_match = re.match(r'^(.+)$', title_author_line)
+            if not title_author_match:
+                continue
+            book_title = title_author_match.group(1)
+            author = "Unknown Author"
+        else:
+            book_title, author = title_author_match.groups()
+        
+        # Parse metadata (location, date)
+        meta_line = entry.split('\n')[1].strip()
+        meta_match = re.match(
+            r'^- Your (?:Highlight|Note|Bookmark) on (?:Location|位置|Page) ([^|]+)(?: \| Added on (.*))?$',
+            meta_line
+        )
+        if not meta_match:
             continue
-
-        book_title, author = lines[0].rsplit(" (", 1)
-        author = author.rstrip(")")
-        metadata = lines[1].strip()
-        text = "\n".join(lines[3:])
-
-        # Extract location and timestamp
-        location_match = re.search(r"Location (\d+)", metadata)
-        timestamp_match = re.search(r"Added on (.+)", metadata)
-
-        if not location_match or not timestamp_match:
-            continue
-
-        location = location_match.group(1)
-        timestamp = timestamp_match.group(1)
-
-        highlights.append(KindleHighlight(book_title, author, text, location, timestamp))
-
-    return highlights
+        location = meta_match.group(1).strip()
+        date = meta_match.group(2).strip() if meta_match.group(2) else "Unknown Date"
+        
+        # Parse highlight text
+        text_lines = entry.split('\n')[2:]
+        text = '\n'.join([line.strip() for line in text_lines if line.strip()])
+        
+        clippings.append({
+            'book_title': book_title,
+            'author': author,
+            'location': location,
+            'date': date,
+            'text': text
+        })
+    
+    return clippings
 
 
-def write_markdown(highlights, output_path):
-    """Write highlights to a Markdown file, grouped by book."""
+def generate_markdown(clippings: List[Dict], output_dir: str) -> None:
+    """Generate Markdown files from parsed clippings."""
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Group clippings by book
     books = {}
-    for highlight in highlights:
-        if highlight.book_title not in books:
-            books[highlight.book_title] = []
-        books[highlight.book_title].append(highlight)
-
-    with open(output_path, "w", encoding="utf-8") as file:
-        for book_title, book_highlights in books.items():
-            file.write(f"# {book_title} ({book_highlights[0].author})\n\n")
-            for highlight in book_highlights:
-                file.write(highlight.to_markdown().split("\n")[1] + "\n\n")
+    for clipping in clippings:
+        book_key = (clipping['book_title'], clipping['author'])
+        if book_key not in books:
+            books[book_key] = []
+        books[book_key].append(clipping)
+    
+    # Write one Markdown file per book
+    for (book_title, author), book_clippings in books.items():
+        # Sanitize filename (preserve non-ASCII characters)
+        safe_title = "".join(c if c.isalnum() or c in (' ', '_', '-') else '_' for c in book_title).strip('_')
+        output_path = os.path.join(output_dir, f"{safe_title}.md")
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(f"# {book_title}\n")
+            f.write(f"**Author**: {author}\n\n")
+            f.write("---\n\n")
+            
+            for clipping in book_clippings:
+                f.write(f"> {clipping['text']}\n\n")
+                f.write(f"- *Location*: {clipping['location']} | *Added on*: {clipping['date']}\n\n")
 
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python3 kindle2md.py /path/to/My\\ Clippings.txt output.md")
+        print("Usage: python kindle2md.py <input_file> <output_dir>")
         sys.exit(1)
-
-    input_path = Path(sys.argv[1])
-    output_path = Path(sys.argv[2])
-
-    if not input_path.exists():
-        print(f"Error: Input file '{input_path}' not found.")
+    
+    input_file = sys.argv[1]
+    output_dir = sys.argv[2]
+    
+    if not os.path.exists(input_file):
+        print(f"Error: Input file '{input_file}' not found.")
         sys.exit(1)
-
-    highlights = parse_clippings(input_path)
-    write_markdown(highlights, output_path)
-    print(f"Successfully converted {len(highlights)} highlights to '{output_path}'.")
+    
+    clippings = parse_clippings(input_file)
+    generate_markdown(clippings, output_dir)
+    print(f"Successfully converted {len(clippings)} clippings to Markdown in '{output_dir}'.")
 
 
 if __name__ == "__main__":
