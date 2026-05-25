@@ -73,6 +73,11 @@ This repository was published under "" due to GitHub namespace restrictions. A t
 
 To request a transfer, open an issue in this repository or contact `@femirins` on GitHub.
 ## Note
-This repository was published under "fairyfemirins" due to GitHub namespace restrictions. A transfer to "femirins" is pending.
+This repository was published under `fairyfemirins` due to GitHub namespace restrictions. A transfer to `femirins` is pending.
 
 To request a transfer, open an issue in this repository or contact `@femirins` on GitHub.
+
+Alternatively, manually request a transfer via the GitHub web UI:
+1. Navigate to [https://github.com/fairyfemirins/kindle2md/settings](https://github.com/fairyfemirins/kindle2md/settings).
+2. Under "Danger Zone", select "Transfer ownership".
+3. Enter the target namespace (`femirins`) and confirm.
