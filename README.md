@@ -68,4 +68,11 @@ python3 -m unittest discover
 ```
 
 ## License
-MIT
+MIT## Note
+This repository was published under "" due to GitHub namespace restrictions. A transfer to "femirins" is pending.
+
+To request a transfer, open an issue in this repository or contact `@femirins` on GitHub.
+## Note
+This repository was published under "fairyfemirins" due to GitHub namespace restrictions. A transfer to "femirins" is pending.
+
+To request a transfer, open an issue in this repository or contact `@femirins` on GitHub.
